@@ -1,0 +1,7 @@
+project: frida-gum
+target: gum-graft
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/gum-graft/testsuite
+cmds:
+  - cmd: /mayhem/gum-graft
