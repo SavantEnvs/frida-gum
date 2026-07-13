@@ -1,0 +1,14 @@
+project: savantenvs/frida-gum
+target: gum-graft
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/gum-graft/testsuite
+cmds:
+  - cmd: /mayhem/gum-graft
+    # mayhem/gumgraft_fuzz.c defines LLVMFuzzerTestOneInput: this is a real libFuzzer target, so
+    # Mayhem must drive it in-process (without this it degrades to the weak file-input path).
+    # MUST be nested here under cmds:, NOT top-level — the Mayhem schema rejects a top-level
+    # `libfuzzer` key outright ("Additional properties are not allowed ('libfuzzer' was
+    # unexpected)"), which fails run creation while the LOCAL gate accepts it and passes. Same
+    # lesson as the luau integration (#1235).
+    libfuzzer: true
